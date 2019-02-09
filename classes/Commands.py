@@ -1,11 +1,117 @@
 from classes import AbstractMethods
-from classes.Screenshot import Screenshot
 from classes.ImageCoordinate import ImageCoordinate
 from classes.Clicker import Clicker as clicker
-import cv2
+from classes.Speak import Speak
+import pyautogui
 import sys
 import winsound
 from time import sleep
+
+
+class MousePosition:
+    @staticmethod
+    def position():
+        print(pyautogui.position())
+
+
+class RemoveOldCaveMessage(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/cave_old'):
+            coord = ImageCoordinate.coords('images/delete_button')
+            clicker.click(coord)
+        self.next()
+
+
+class RemoveWarReport(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/war_report'):
+            coord = ImageCoordinate.coords('images/delete_button')
+            clicker.click(coord)
+        self.next()
+
+
+class ClaimPrize(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/claim_gift'):
+            coord = ImageCoordinate.coords('images/claim_gift')
+            clicker.click(coord)
+        self.next()
+
+
+class ClickOnNida(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/nida_image'):
+            coord = ImageCoordinate.coords('images/nida_image')
+            clicker.click(coord)
+        self.next()
+
+
+class OpenMail(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        while not ImageCoordinate.is_on_screen('images/mail_button'):
+            coord = ImageCoordinate.coords('images/close_window')
+            clicker.click(coord)
+        else:
+            coord = ImageCoordinate.coords('images/mail_button')
+            clicker.move_click(coord)
+        self.next()
+
+
+class ClickReport(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/report_selected'):
+            pass
+        else:
+            coord = ImageCoordinate.coords('images/report_button')
+            clicker.move_click(coord)
+        self.next()
+
+
+class DeleteGatheringReport(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/gathering_report'):
+            coord = ImageCoordinate.coords('images/gathering_report')
+            clicker.move_click(coord)
+            coord = ImageCoordinate.coords('images/delete_button')
+            clicker.move_click(coord)
+        self.next()
+
+
+class SelectExploreMail(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.coords('images/explore_mail'):
+            coord = ImageCoordinate.coords('images/explore_mail')
+            clicker.move_click(coord)
+        else:
+            pass
+        self.next()
+
+
+class ClickTelescope(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        sleep(2)
+        coord = ImageCoordinate.coords('images/teleskop_button')
+        clicker.move_click(coord)
+        self.next()
+
+
+class ClickPresentIcon(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        sleep(1)
+        if ImageCoordinate.is_on_screen('images/present_icon'):
+            coord = ImageCoordinate.coords('images/present_icon')
+            clicker.move_click(coord)
+            sleep(1)
+            clicker.click(coord)
+        self.next()
+
+
+class ClickInvestigation(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/investigate_button'):
+            coord = ImageCoordinate.coords('images/investigate_button')
+            clicker.click(coord)
+        self.next()
 
 
 class MoveToScoutCampAndClick(AbstractMethods.ProcessHandler):
@@ -39,21 +145,24 @@ class SearchExploreButton(AbstractMethods.ProcessHandler):
         sleep(2)
         print('Searching for explore button in scout management window')
         while not ImageCoordinate.is_on_screen('images/explore_button'):
-            print('No scouts available')
-            print('Waiting 10 seconds')
-            sleep(10)
+            print('No scouts are available, Waiting 20 seconds')
+            Speak().speak('No scouts are available, waiting for 20 seconds')
+            sleep(20)
+            Speak().speak('Waited for 20 seconds')
             print('Waited 10 seconds...')
         else:
             print('Continue exploration...')
+            Speak().speak('Continue exploration!')
         self.next()
 
 
 class SendScoutButton(AbstractMethods.ProcessHandler):
     def do_work(self):
         sleep(2)
-        print('Sending scout to explore the kingdom')
-        coord = ImageCoordinate.coords('images/send_scout_button')
-        clicker.move_click(coord)
+        if ImageCoordinate.is_on_screen('images/send_scout_button'):
+            print('Sending scout to explore the kingdom')
+            coord = ImageCoordinate.coords('images/send_scout_button')
+            clicker.move_click(coord)
         self.next()
 
 

@@ -13,7 +13,6 @@ I tried to automate some of the actions in Rise of Civilization.
     
 You may need to write your own loop to continuously attack barbarians.
     
-    
 
 **How to explore automatically?**
 
