@@ -1,8 +1,22 @@
 from classes.Screenshot import Screenshot
 import cv2
+import numpy as np
+from matplotlib import pyplot as plt
 
 
 class ImageCoordinate:
+    @staticmethod
+    def count_occurrence(this):
+        Screenshot.shot()
+        this = this + '.png'
+        img_rgb = cv2.imread(this)
+        template = cv2.imread('playing.png')
+        res = cv2.matchTemplate(img_rgb, template, 1)
+        threshold = 0.8
+        loc = np.where(res >= threshold)
+        cv2.imwrite('result.png', img_rgb)
+        return loc
+
     @staticmethod
     def is_on_screen(this):
         this = this + '.png'
