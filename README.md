@@ -37,5 +37,5 @@ The code below will start exploration until you stop it.
 
 **Graphical.py**
 
-    It helps you graphicalls start attack on barbarians, explore kingdom automatically
+    It helps you graphically start attack on barbarians, explore kingdom automatically
     and take a screenshot
