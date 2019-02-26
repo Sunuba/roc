@@ -1,7 +1,8 @@
 from classes.Commands import CheckAntibot, CheckActionPoint, GoOutside, ClickSearchButton, IsTroopReturns
 from classes.Commands import ClickSearchTargetButton, ClickBarbarianButton, ClickResetLevelButton
 from classes.Commands import ClickSetLevelButton, ClickAttackButton, ClickNewTroopButton, ClickMarchButton
-from classes.Commands import IsVerifyOn, IsMarchButtonVisible, IsTroopFights
+from classes.Commands import IsVerifyOn, IsMarchButtonVisible, IsTroopFights, GoHome, ClickToHospital, ClickOnRedCross
+from classes.Commands import ClickOnHealButton
 
 
 class AttackBarbarians:
@@ -29,9 +30,14 @@ class AttackBarbarians:
         is_troops_fight = IsTroopFights()
         # while troop returning do nothing, when then reach home, start another attack.
         is_troops_return = IsTroopReturns()
+        # in this section you will heal all your troops
+        go_home = GoHome()
+        click_hospital = ClickToHospital()
+        click_red_cross = ClickOnRedCross()
+        click_heal_button = ClickOnHealButton()
+        get_out = GoOutside()
 
-
-
+        # Chain starts here.
         is_verify_on.set_successor(check_antibot)
         check_antibot.set_successor(check_action_points)
         check_action_points.set_successor(go_outside)
@@ -47,4 +53,10 @@ class AttackBarbarians:
         new_troops.set_successor(march_to_enemy)
         march_to_enemy.set_successor(is_troops_fight)
         is_troops_fight.set_successor(is_troops_return)
+        # Healing chain starts here
+        is_troops_return.set_successor(go_home)
+        go_home.set_successor(click_hospital)
+        click_hospital.set_successor(click_red_cross)
+        click_red_cross.set_successor(click_heal_button)
+        click_heal_button.set_successor(get_out)
         is_verify_on.do_work()
