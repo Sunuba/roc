@@ -25,7 +25,7 @@ I tried to automate some of the actions in Rise of Civilization.
     your choice of emulator.
     
     2. Your City Hall layout should be in this way:
-        ![alt text](https://github.com/Sunuba/roc/blob/master/images/layout.png "City Hall Layout")
+![alt text](https://github.com/Sunuba/roc/blob/master/images/layout.png "City Hall Layout")
 
 
 **How to attack barbarians?**
