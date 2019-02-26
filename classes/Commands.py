@@ -44,13 +44,35 @@ class ClickOnLocation:
         clicker.repeat_click(3)
 
 
-class IsMarchButtonVisible():
-    @staticmethod
-    def check():
+class IsMarchButtonVisible(AbstractMethods.ProcessHandler):
+    def do_work(self):
         while ImageCoordinate.is_on_screen('images/btnMarch'):
-            return True
+            clicker.repeat_click(3)
+            print('No queue available, quit attack.')
+            print('waiting for some time...')
         else:
-            return False
+            pass
+        self.next()
+
+
+class IsTroopFights(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        while not ImageCoordinate.is_on_screen('images/returning'):
+            sleep(5)
+            print('Troops are fighting, let\'s wait them.')
+        else:
+            pass
+        self.next()
+
+
+class IsTroopReturns(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        while ImageCoordinate.is_on_screen('images/returning'):
+            sleep(5)
+            print('Troops are returning, let\'s wait them.')
+        else:
+            pass
+        self.next()
 
 
 class ClickCloseButton(AbstractMethods.ProcessHandler):
@@ -415,6 +437,12 @@ class ClickMarch(AbstractMethods.ProcessHandler):
             clicker.move_click(coord)
         else:
             pass
+        self.next()
+
+
+class CheckHospital(AbstractMethods.ProcessHandler):
+    def do_work(self):
+
         self.next()
 
 
