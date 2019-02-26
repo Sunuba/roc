@@ -4,6 +4,16 @@ I tried to automate some of the actions in Rise of Civilization.
     - Attack
 
 
+**REQUIREMENTS**
+
+    pyttsx3 - for speaking
+    pyautogui - for all other actions
+    
+    I have checked the scripts on Nox Player and Bluestacks. It works perfectly on both.
+    My emulator window size is 1280x720. You can easily set this parameter from settings of
+    your choice of emulator.
+
+
 **TODO:**
 
     1. During attack or after attack check hospital, click heal and request help
@@ -39,3 +49,8 @@ The code below will start exploration until you stop it.
 
     It helps you graphically start attack on barbarians, explore kingdom automatically
     and take a screenshot
+    
+
+**Can you improve it?**
+    
+    Do it! let's make it better!
