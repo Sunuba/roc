@@ -481,4 +481,34 @@ class CheckAntibot(AbstractMethods.ProcessHandler):
         self.next()
 
 
+class ClickToHospital(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/hospital'):
+            print('Clicking on hospital... You know why!')
+            coord = ImageCoordinate.coords('images/hospital', shot=False)
+            clicker.move_click(coord)
+        else:
+            print('I do not see any hospital. Is there a problem?')
+        self.next()
 
+
+class ClickOnRedCross(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/red_cross_hospital'):
+            print('Clicking on red cross over the hospital')
+            coord = ImageCoordinate.coords('images/red_cross_hospital', shot=False)
+            clicker.click(coord)
+        else:
+            print('I do not see any red cross, it means that troops are ok for now.')
+        self.next()
+
+
+class ClickOnHealButton(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/heal_button'):
+            print('Clicking to heal button to heal troops.')
+            coord = ImageCoordinate.coords('images/heal_button', shot=False)
+            clicker.click(coord)
+        else:
+            pass
+        self.next()
