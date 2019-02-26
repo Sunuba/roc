@@ -7,6 +7,7 @@ import sys
 import winsound
 from time import sleep
 import datetime
+import time
 
 
 class MousePosition:
@@ -55,11 +56,23 @@ class IsMarchButtonVisible(AbstractMethods.ProcessHandler):
         self.next()
 
 
+class IsTroopWalks(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        sleep(1)
+        while ImageCoordinate.is_on_screen('images/walking'):
+            print('Troops are walking. Timestamp: ' + str(time.time()))
+            sleep(5)
+        else:
+            pass
+        self.next()
+
+
 class IsTroopFights(AbstractMethods.ProcessHandler):
     def do_work(self):
+        sleep(2)
         while not ImageCoordinate.is_on_screen('images/returning'):
             sleep(5)
-            print('Troops are fighting, let\'s wait them.')
+            print('Troops are fighting now. Timestamp: ' + str(time.time()))
         else:
             pass
         self.next()
@@ -67,9 +80,10 @@ class IsTroopFights(AbstractMethods.ProcessHandler):
 
 class IsTroopReturns(AbstractMethods.ProcessHandler):
     def do_work(self):
+        sleep(2)
         while ImageCoordinate.is_on_screen('images/returning'):
             sleep(5)
-            print('Troops are returning, let\'s wait them.')
+            print('Troops are returning, let\'s wait them. Timestamp: ' + str(time.time()))
         else:
             pass
         self.next()
@@ -201,7 +215,7 @@ class ClickInvestigation(AbstractMethods.ProcessHandler):
 class MoveToScoutCampAndClick(AbstractMethods.ProcessHandler):
     def do_work(self):
         print('Moving over scout camp and clicking on it to open scout menu')
-        clicker.move(368*2, -127*2)
+        clicker.move(368*2-140, -127*2-140)
         clicker.click(clicker.mouse_pos())
         self.next()
 
@@ -483,20 +497,17 @@ class CheckAntibot(AbstractMethods.ProcessHandler):
 
 class ClickToHospital(AbstractMethods.ProcessHandler):
     def do_work(self):
-        if ImageCoordinate.is_on_screen('images/hospital'):
-            print('Clicking on hospital... You know why!')
-            coord = ImageCoordinate.coords('images/hospital', shot=False)
-            clicker.move_click(coord)
-        else:
-            print('I do not see any hospital. Is there a problem?')
+        clicker.move(368 * 2, -127 * 2)
+        clicker.click(clicker.mouse_pos())
+        print('Clicked on hospital')
         self.next()
 
 
-class ClickOnRedCross(AbstractMethods.ProcessHandler):
+class ClickOnHealMenuButton(AbstractMethods.ProcessHandler):
     def do_work(self):
         if ImageCoordinate.is_on_screen('images/red_cross_hospital'):
             print('Clicking on red cross over the hospital')
-            coord = ImageCoordinate.coords('images/red_cross_hospital', shot=False)
+            coord = ImageCoordinate.coords('images/red_cross_hospital')
             clicker.click(coord)
         else:
             print('I do not see any red cross, it means that troops are ok for now.')
@@ -510,5 +521,31 @@ class ClickOnHealButton(AbstractMethods.ProcessHandler):
             coord = ImageCoordinate.coords('images/heal_button', shot=False)
             clicker.click(coord)
         else:
+            print('Troops are healthy... No need to heal.')
             pass
+        self.next()
+
+
+class AskHelp(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        sleep(2)
+        if ImageCoordinate.is_on_screen('images/ask_help_button'):
+            coord = ImageCoordinate.coords('images/ask_help_button')
+            clicker.move_to(coord)
+            clicker.repeat_click(5, -20, 40)
+            print('Clicked on help request')
+        else:
+            print('Help is not required')
+        self.next()
+
+
+class HelpOthers(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        if ImageCoordinate.is_on_screen('images/help_others'):
+            coord = ImageCoordinate.coords('images/help_others')
+            clicker.move_to(coord)
+            clicker.repeat_click(5, -20, 40)
+            print('Helped alliance members')
+        else:
+            print('Alliance members do not need any help')
         self.next()

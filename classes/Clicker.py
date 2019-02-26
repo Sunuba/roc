@@ -5,8 +5,10 @@ from time import sleep
 class Clicker:
 
     @staticmethod
-    def repeat_click(say):
+    def repeat_click(say, adjust_x=0, adjust_y=0):
         x, y = pyautogui.position()
+        x = x+adjust_x
+        y = y+adjust_y
         print(x, y)
         pyautogui.click(x, y, clicks=say-1, interval=0.1)
 
