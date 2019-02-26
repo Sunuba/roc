@@ -237,7 +237,7 @@ class SearchExploreButton(AbstractMethods.ProcessHandler):
             CheckAntibot().do_work()
         else:
             print('Continue exploration...')
-            Speak().speak('Continue exploration!')
+            # Speak().speak('Continue exploration!')
         self.next()
 
 
