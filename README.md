@@ -26,6 +26,8 @@ I tried to automate some of the actions in Rise of Civilization.
     
     2. Your City Hall layout should be in this way:
 ![alt text](https://github.com/Sunuba/roc/blob/master/images/layout.png "City Hall Layout")
+    3. Actually, Alliance Center, Scout Camp and Hospital locations are important in the layout.
+     The rest you can put wherever you want.
 
 
 **How to attack barbarians?**
