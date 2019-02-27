@@ -8,7 +8,7 @@ I tried to automate some of the actions in Rise of Civilization.
 
 **TODO:**
 
-    1. Gather
+    1. Gather resources
     2. Improve mail reading. When reading mail, send only one scout to one cave.
     
 
