@@ -10,10 +10,69 @@ import datetime
 import time
 
 
+class ResetWhile():
+    def __init__(self, seconds):
+        self.seconds = seconds
+
+    def start(self):
+        saniye = self.seconds
+        while saniye > 0:
+            print('Waiting:' + str(saniye))
+            sleep(1)
+            saniye -= 1
+
+
 class MousePosition:
     @staticmethod
     def position():
         print(pyautogui.position())
+
+
+class ZoomOut(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        pyautogui.keyDown('s')
+        time.sleep(2)
+        pyautogui.keyUp('s')
+        pyautogui.keyDown('s')
+        time.sleep(2)
+        pyautogui.keyUp('s')
+        pyautogui.keyDown('s')
+        time.sleep(2)
+        pyautogui.keyUp('s')
+        pyautogui.keyDown('s')
+        time.sleep(2)
+        pyautogui.keyUp('s')
+        print('Zoomed out.')
+        self.next()
+
+
+class DoYouSeeHome(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        start_time = time.time()
+        while ImageCoordinate.is_on_screen('images/present_house'):
+            coord = ImageCoordinate.coords('images/present_house')
+            clicker.move_click(coord)
+            print('Moved mouse to present home.')
+        else:
+            print('I do not see any present home.')
+        self.next()
+
+
+
+class ClickToVillage(AbstractMethods.ProcessHandler):
+    def do_work(self):
+        start_time = time.time()
+        while not ImageCoordinate.is_on_screen('images/present_icon'):
+            # if time.time() - start_time > 10:
+            #     print('Restarting...')
+            #     break
+            print('No present this time')
+        else:
+            coord = ImageCoordinate.coords('images/present_icon', shot=False)
+            clicker.click(coord)
+            clicker.repeat_click(3, interval=0.55)
+            print('Received present')
+        self.next()
 
 
 class ClickWoodButton(AbstractMethods.ProcessHandler):
@@ -245,9 +304,9 @@ class SearchExploreButton(AbstractMethods.ProcessHandler):
         while not ImageCoordinate.is_on_screen('images/explore_button'):
             print('No scouts are available, Waiting 20 seconds')
             # Speak().speak('No scouts are available, waiting for 20 seconds')
-            sleep(20)
+            sleep(5)
             # Speak().speak('Waited for 20 seconds')
-            print('Waited 20 seconds...')
+            print('Waited 5 seconds...')
             CheckAntibot().do_work()
         else:
             print('Continue exploration...')
@@ -315,7 +374,7 @@ class ClickSearchTargetButton(AbstractMethods.ProcessHandler):
             coord = ImageCoordinate.coords('images/btnSearch', shot=False)
             clicker.move_click(coords=coord)
         else:
-            pass
+            sys.exit('btnSearch is not visible.')
         self.next()
 
 
@@ -352,11 +411,11 @@ class DecreaseLevel(AbstractMethods.ProcessHandler):
 class ClickSetLevelButton(AbstractMethods.ProcessHandler):
     def do_work(self):
         if ImageCoordinate.is_on_screen('images/search_plus_button'):
-            print('Resetting level to ' + str(self.get_level()))
-            coord = ImageCoordinate.coords('images/search_plus_button', shot=False)
+            print('Setting level to ' + str(self.get_level()))
+            coord = ImageCoordinate.coords('images/search_plus_button')
             clicker.move_click(coord, clicks=self.get_level()-1, interval=0.15)
         else:
-            pass
+            sys.exit('search_plus_button not found. Time: ' + str(time.time()))
         self.next()
 
 
@@ -499,6 +558,7 @@ class ClickToHospital(AbstractMethods.ProcessHandler):
     def do_work(self):
         clicker.move(368 * 2, -127 * 2)
         clicker.click(clicker.mouse_pos())
+        clicker.repeat_click(3)
         print('Clicked on hospital')
         self.next()
 
@@ -549,3 +609,9 @@ class HelpOthers(AbstractMethods.ProcessHandler):
         else:
             print('Alliance members do not need any help')
         self.next()
+
+
+class DragScreen():
+    @staticmethod
+    def start(xOffset, yOffset, duration):
+        pyautogui.dragRel(xOffset, yOffset, duration)
