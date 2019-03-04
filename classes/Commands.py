@@ -120,7 +120,7 @@ class IsTroopWalks(AbstractMethods.ProcessHandler):
         sleep(1)
         while ImageCoordinate.is_on_screen('images/walking'):
             print('Troops are walking. Timestamp: ' + str(time.time()))
-            sleep(5)
+            sleep(0.5)
         else:
             pass
         self.next()
@@ -128,10 +128,10 @@ class IsTroopWalks(AbstractMethods.ProcessHandler):
 
 class IsTroopFights(AbstractMethods.ProcessHandler):
     def do_work(self):
-        sleep(2)
+        sleep(1)
         while not ImageCoordinate.is_on_screen('images/returning'):
-            sleep(5)
             print('Troops are fighting now. Timestamp: ' + str(time.time()))
+            sleep(0.5)
         else:
             pass
         self.next()
@@ -139,10 +139,10 @@ class IsTroopFights(AbstractMethods.ProcessHandler):
 
 class IsTroopReturns(AbstractMethods.ProcessHandler):
     def do_work(self):
-        sleep(2)
+        sleep(1)
         while ImageCoordinate.is_on_screen('images/returning'):
-            sleep(5)
             print('Troops are returning, let\'s wait them. Timestamp: ' + str(time.time()))
+            sleep(0.50)
         else:
             pass
         self.next()
@@ -425,7 +425,7 @@ class ClickSearchButton(AbstractMethods.ProcessHandler):
             print('Clicking search button to search for the target')
             coord = ImageCoordinate.coords('images/search', shot=False)
             clicker.move_click(coord)
-            clicker.move(368, -127)
+            clicker.move(500, -160)
             clicker.click(clicker.mouse_pos())
         else:
             pass
@@ -556,7 +556,8 @@ class CheckAntibot(AbstractMethods.ProcessHandler):
 
 class ClickToHospital(AbstractMethods.ProcessHandler):
     def do_work(self):
-        clicker.move(368 * 2, -127 * 2)
+        clicker.move(368 * 2+150, -127 * 2-100)
+        # sys.exit('Adjust hospital')
         clicker.click(clicker.mouse_pos())
         clicker.repeat_click(3)
         print('Clicked on hospital')

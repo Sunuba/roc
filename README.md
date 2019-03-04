@@ -29,6 +29,25 @@ I tried to automate some of the actions in Rise of Civilization.
     
     3. Actually, Alliance Center, Scout Camp and Hospital locations are important in the layout.
      The rest you can put wherever you want.
+     4. You must create your own images so that script will recognize the, and click them as required
+     For example, for attack ask_help_button, bot_test, btnSearch, help_others, isHome, isOutSide,
+     red_cross_hospital, returning, search_plus_button, verify_button is required. If you do not
+     screenshot and extract those images, the script probably will not work, as my computer and
+     your comuter screen size (resolution) could be different. Please consider all these issues.
+     5. In some cases you need to adjust clicker coordinates as well. After attack finishes the script
+     will go and click hospital to heal troops. This action is implemented by the following class:
+     class ClickToHospital(AbstractMethods.ProcessHandler):
+        def do_work(self):
+            clicker.move(368 * 2+150, -127 * 2-100)
+            # sys.exit('Adjust hospital')
+            clicker.click(clicker.mouse_pos())
+            clicker.repeat_click(3)
+            print('Clicked on hospital')
+            self.next()
+        
+        Here I have added 150 to x and subtracted 100 from y coordinates in order to land on the hospital.
+        You may need to correct these numbers as well. To cut a long story short you need to have a little
+        bit of programming skills in order to have it run smoothly.
 
 
 **How to attack barbarians?**

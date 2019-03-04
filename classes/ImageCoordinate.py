@@ -2,6 +2,7 @@ from classes.Screenshot import Screenshot
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+import pyautogui
 
 
 class ImageCoordinate:
@@ -11,7 +12,7 @@ class ImageCoordinate:
         this = this + '.png'
         img_rgb = cv2.imread(this)
         template = cv2.imread('playing.png')
-        res = cv2.matchTemplate(img_rgb, template, 1)
+        res = cv2.matchTemplate(img_rgb, template, cv2.TM_SQDIFF_NORMED)
         threshold = 0.8
         loc = np.where(res >= threshold)
         cv2.imwrite('result.png', img_rgb)
@@ -23,9 +24,12 @@ class ImageCoordinate:
         Screenshot.shot()
         small_image = cv2.imread(this)
         large_image = cv2.imread('playing.png')
-        result = cv2.matchTemplate(small_image, large_image, 1)
+        result = cv2.matchTemplate(small_image, large_image, cv2.TM_SQDIFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
         # print('ImageCoordinate::is_on_screen => ' + this + ' ' + str(min_val))
+        mn, _, mn_loc, _ = cv2.minMaxLoc(result)
+        mp_x, mp_y = mn_loc
+        # pyautogui.moveTo(mp_x, mp_y)
         if min_val > 0.05:
             return False
         else:
@@ -41,9 +45,12 @@ class ImageCoordinate:
         small_image = cv2.imread(this)
         h, w, c = small_image.shape
         large_image = cv2.imread('playing.png')
-        result = cv2.matchTemplate(small_image, large_image, 1)
+        result = cv2.matchTemplate(small_image, large_image, cv2.TM_SQDIFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
         # print('ImageCoordinate::coords => ' + this + ' ' + str(min_val))
+        mn, _, mn_loc, _ = cv2.minMaxLoc(result)
+        mp_x, mp_y = mn_loc
+        # pyautogui.moveTo(mp_x, mp_y)
         if min_val > 0.25:
             return [0, 0, min_val]
         mn, _, mn_loc, _ = cv2.minMaxLoc(result)
