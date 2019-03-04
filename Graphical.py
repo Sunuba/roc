@@ -1,6 +1,6 @@
 from tkinter import *
-from AttackBarbarians import AttackBarbarians
-from ExploreFog import ExploreFog
+from classes.AttackBarbarians import AttackBarbarians
+from classes.ExploreFog import ExploreFog
 from classes.Screenshot import Screenshot
 
 
