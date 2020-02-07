@@ -23,17 +23,32 @@ class ImageCoordinate:
         this = this + '.png'
         Screenshot.shot()
         small_image = cv2.imread(this)
+        h, w, c = small_image.shape
         large_image = cv2.imread('playing.png')
         result = cv2.matchTemplate(small_image, large_image, cv2.TM_SQDIFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-        # print('ImageCoordinate::is_on_screen => ' + this + ' ' + str(min_val))
-        mn, _, mn_loc, _ = cv2.minMaxLoc(result)
+        #print('ImageCoordinate::is_on_screen => ' + this + ' ' + str(min_val))
+        mn, _, mn_loc, mx_loc = cv2.minMaxLoc(result)
         mp_x, mp_y = mn_loc
-        # pyautogui.moveTo(mp_x, mp_y)
-        if min_val > 0.05:
+        m_x, m_y = mx_loc
+        # print(mn_loc)
+        # top_left = mn_loc
+        # mx_right = mx_loc
+        # bt_rt =(top_left[0]+h,top_left[1]+w)
+        # cv2.rectangle(large_image,top_left,bt_rt,255,2)
+
+        # bt_rt =(mx_right[0]+h,mx_right[1]+w)
+        # cv2.rectangle(large_image,mx_right,bt_rt,255,2)
+        # cv2.imwrite('result_'+this.replace('images/',''), large_image)
+        #print('saved')
+        #pyautogui.moveTo(mp_x, mp_y)
+        if min_val > 0.15:
             return False
         else:
-            return True
+            mn, _, mn_loc, _ = cv2.minMaxLoc(result)
+            mp_x, mp_y = mn_loc
+            location = [mp_x + w / 2, mp_y + h / 2, min_val]
+            return location
 
     @staticmethod
     def coords(this, shot=True):
@@ -48,10 +63,19 @@ class ImageCoordinate:
         result = cv2.matchTemplate(small_image, large_image, cv2.TM_SQDIFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
         # print('ImageCoordinate::coords => ' + this + ' ' + str(min_val))
-        mn, _, mn_loc, _ = cv2.minMaxLoc(result)
+        mn, _, mn_loc, mx_loc = cv2.minMaxLoc(result)
         mp_x, mp_y = mn_loc
-        # pyautogui.moveTo(mp_x, mp_y)
-        if min_val > 0.25:
+        # #pyautogui.moveTo(mp_x, mp_y)
+        # top_left = mn_loc
+        # mx_right = mx_loc
+        # bt_rt =(top_left[0]+h,top_left[1]+w)
+        # cv2.rectangle(large_image,top_left,bt_rt,255,2)
+
+        # bt_rt =(mx_right[0]+h,mx_right[1]+w)
+        # cv2.rectangle(large_image,mx_right,bt_rt,255,2)
+        # cv2.imwrite('result_'+this.replace('images/',''), large_image)
+        #print('saved'+str(min_val))
+        if min_val > 0.2:
             return [0, 0, min_val]
         mn, _, mn_loc, _ = cv2.minMaxLoc(result)
         mp_x, mp_y = mn_loc
