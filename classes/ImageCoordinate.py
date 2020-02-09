@@ -19,7 +19,7 @@ class ImageCoordinate:
         return loc
 
     @staticmethod
-    def is_on_screen(this):
+    def is_on_screen(this,accuracy = 0.15):
         this = this + '.png'
         Screenshot.shot()
         small_image = cv2.imread(this)
@@ -42,7 +42,8 @@ class ImageCoordinate:
         # cv2.imwrite('result_'+this.replace('images/',''), large_image)
         #print('saved')
         #pyautogui.moveTo(mp_x, mp_y)
-        if min_val > 0.15:
+        print(min_val)
+        if min_val > accuracy:
             return False
         else:
             mn, _, mn_loc, _ = cv2.minMaxLoc(result)

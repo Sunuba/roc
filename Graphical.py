@@ -2,7 +2,7 @@ from tkinter import *
 from classes.AttackBarbarians import AttackBarbarians
 from classes.ExploreFog import ExploreFog
 from classes.Screenshot import Screenshot
-
+from classes.tester import Tester
 
 starter = Tk()
 starter.winfo_toplevel().title('Rise of Kingdom - Automator')
@@ -29,6 +29,9 @@ class MainInterface:
         while True:
             attack = AttackBarbarians(barb_level,troop_count)
             attack.start()
+    def test_start(self):
+        Tester.start()
+
     def start_explore(self):
         ExploreFog.start()
 
@@ -39,12 +42,13 @@ class MainInterface:
         lbl_barb_attack = Label(starter, text="Enter barbarian level and press button")
         lbl_barb_troop = Label(starter, text="Enter troop number and press button")
 
-        btn_barb_attack = Button(starter, text="Attack Barbarian", command=(lambda: self.start_attack()))
-        lbl_explore = Label(starter, text="Explore Kingdom")
-        btn_explore = Button(starter, text="Explore Kingdom", command=(lambda: self.start_explore()))
-        lbl_take_screenshot = Label(starter, text="Take Screenshot")
+        #btn_barb_attack = Button(starter, text="Attack Barbarian", command=(lambda: self.start_attack()))
+        #btn_explore = Button(starter, text="Explore Kingdom", command=(lambda: self.start_explore()))
+
+        #btn_test = Button(starter, text="test method", command=(lambda: self.test_start()))
+
         btn_take_screenshot = Button(starter, text="Screenshot", command=(lambda: self.take_screenshot()))
-        lbl_barb_allday = Label(starter, text="barb_allday")
+        #lbl_barb_allday = Label(starter, text="barb_allday")
         btn_barb_allday = Button(starter, text="barb_allday", command=(lambda: self.barb_allday()))
         
         lbl_barb_attack.pack()
@@ -53,12 +57,11 @@ class MainInterface:
         lbl_barb_troop.pack()
         self.txt_troop_count.pack()
 
-        btn_barb_attack.pack()
-        lbl_explore.pack()
-        btn_explore.pack()
-        lbl_take_screenshot.pack()
+        #btn_barb_attack.pack()
+        #btn_explore.pack()
+        #btn_test.pack()
         btn_take_screenshot.pack()
-        lbl_barb_allday.pack()
+#        lbl_barb_allday.pack()
         btn_barb_allday.pack()
 
  
