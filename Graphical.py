@@ -11,23 +11,21 @@ starter.geometry('250x500')
 
 class MainInterface:
 
-    txt_barb_level = Entry(starter)
+    txt_minbarb_level = Entry(starter)
+    txt_maxbarb_level = Entry(starter)
+
     txt_troop_count = Entry(starter)
     def __init__(self, barb_level, function):
         self.barb_level = barb_level
         self.function = function
 
-    def start_attack(self):
-        barb_level = self.txt_barb_level.get()
-        troop_count = self.txt_troop_count.get()
-        attack = AttackBarbarians(barb_level,troop_count)
-        attack.start()
-
     def barb_allday(self):
-        barb_level = self.txt_barb_level.get()
+        minbarb_level = self.txt_minbarb_level.get()
+        maxbarb_level = self.txt_maxbarb_level.get()
+
         troop_count = self.txt_troop_count.get()
         while True:
-            attack = AttackBarbarians(barb_level,troop_count)
+            attack = AttackBarbarians(minbarb_level,maxbarb_level,troop_count)
             attack.start()
     def test_start(self):
         Tester.start()
@@ -39,7 +37,9 @@ class MainInterface:
         Screenshot.shot('default.png')
 
     def start_interface(self):
-        lbl_barb_attack = Label(starter, text="Enter barbarian level and press button")
+        lbl_minbarb_attack = Label(starter, text="Enter barbarian minlevel")
+        lbl_maxbarb_attack = Label(starter, text="Enter barbarian maxlevel")
+
         lbl_barb_troop = Label(starter, text="Enter troop number and press button")
 
         #btn_barb_attack = Button(starter, text="Attack Barbarian", command=(lambda: self.start_attack()))
@@ -51,9 +51,10 @@ class MainInterface:
         #lbl_barb_allday = Label(starter, text="barb_allday")
         btn_barb_allday = Button(starter, text="barb_allday", command=(lambda: self.barb_allday()))
         
-        lbl_barb_attack.pack()
-        self.txt_barb_level.pack()
-        
+        lbl_minbarb_attack.pack()
+        self.txt_minbarb_level.pack()
+        lbl_maxbarb_attack.pack()
+        self.txt_maxbarb_level.pack()
         lbl_barb_troop.pack()
         self.txt_troop_count.pack()
 

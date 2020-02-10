@@ -1,9 +1,9 @@
 from classes.Commands import *
-
+import random
 
 class AttackBarbarians:
-    def __init__(self, level, troopcount):
-        self.level = int(level)-24
+    def __init__(self, startlevel,endlevel, troopcount):
+        self.level = random.randrange(int(startlevel)-24,int(endlevel)-23)
         self.troopcount = troopcount
 
     def start(self):
@@ -86,12 +86,11 @@ class AttackBarbarians:
         click_red_cross.set_successor(click_heal_button)
         click_heal_button.set_successor(ask_help)
         ask_help.set_successor(help_others)
-        help_others.set_successor(get_cityrss)
-        get_cityrss.set_successor(get_out)
-    
-        get_out.set_successor(openmail)
+        help_others.set_successor(openmail)
         openmail.set_successor(opensystemmail)
         opensystemmail.set_successor(receivemail)
         receivemail.set_successor(click_confirm)
         click_confirm.set_successor(closemail)
+        closemail.set_successor(get_out)
+
         is_verify_on.do_work()

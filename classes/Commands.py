@@ -126,7 +126,7 @@ class IsVerifyOn(AbstractMethods.ProcessHandler):
 
 class IsMarchButtonVisible(AbstractMethods.ProcessHandler):
     def do_work(self):
-        while ImageCoordinate.is_on_screen('images/btnMarch'):
+        while ImageCoordinate.is_on_screen('images/btnMarch') and ImageCoordinate.is_on_screen('images/unitqueue'):
             clicker.repeat_click(3)
             print('No queue available, quit attack.')
             print('waiting for some time...')
@@ -138,7 +138,7 @@ class IsMarchButtonVisible(AbstractMethods.ProcessHandler):
 class IsTroopWalks(AbstractMethods.ProcessHandler):
     def do_work(self):
         sleep(1)
-        while ImageCoordinate.is_on_screen('images/walking'):
+        while ImageCoordinate.is_on_screen('images/walking') and ImageCoordinate.is_on_screen('images/unitqueue'):
             print('Troops are walking. Timestamp: ' + str(time.time()))
             sleep(0.5)
         else:
@@ -286,6 +286,7 @@ class GoOutside(AbstractMethods.ProcessHandler):
                 print('im at home')
                 clicker.move_click(coord)
                 print('Now, you are at outside')
+        print('outing done')
         self.next()
 
 
@@ -502,7 +503,7 @@ def CheckActionPoint():
     #sleep(0.5)
     coord = ImageCoordinate.is_on_screen('images/useap')
     if coord:
-        clicker.move_click(coord, clicks=3, interval=0.15)
+        clicker.move_click(coord, clicks=6, interval=0.15)
         SimpleClick('close_window').do_work()
 
         return 1
