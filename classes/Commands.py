@@ -8,8 +8,7 @@ import winsound
 from time import sleep
 import datetime
 import time
-import classes.breakgeetest
-
+from classes.breakgeetest import *
 
 class ResetWhile():
     def __init__(self, seconds):
@@ -112,22 +111,10 @@ class CountOccurrence(AbstractMethods.ProcessHandler):
         pass
 
 
-class IsVerifyOn(AbstractMethods.ProcessHandler):
-    def do_work(self):
-        today = datetime.datetime.now()
-        while ImageCoordinate.is_on_screen('images/verify_button'):
-            coord = ImageCoordinate.coords('images/verify_button')
-            clicker.click(coord)
-        else:
-            print('Game is safe, no verify button.')
-        self.next()
-
-
-
 class IsMarchButtonVisible(AbstractMethods.ProcessHandler):
     def do_work(self):
         while ImageCoordinate.is_on_screen('images/btnMarch') and ImageCoordinate.is_on_screen('images/unitqueue'):
-            clicker.repeat_click(3)
+            clicker.repeat_click(1)
             print('No queue available, quit attack.')
             print('waiting for some time...')
         else:
@@ -149,7 +136,7 @@ class IsTroopWalks(AbstractMethods.ProcessHandler):
 class IsTroopFights(AbstractMethods.ProcessHandler):
     def do_work(self):
         sleep(1)
-        while (not ImageCoordinate.is_on_screen('images/returning')) and ImageCoordinate.is_on_screen('images/unitqueue'):
+        while (ImageCoordinate.is_on_screen('images/fighting')) and ImageCoordinate.is_on_screen('images/unitqueue'):
             print('Troops are fighting now. Timestamp: ' + str(time.time()))
             sleep(0.5)
         else:
@@ -160,7 +147,7 @@ class IsTroopFights(AbstractMethods.ProcessHandler):
 class IsTroopReturns(AbstractMethods.ProcessHandler):
     def do_work(self):
         sleep(1)
-        while ImageCoordinate.is_on_screen('images/returning'):
+        while ImageCoordinate.is_on_screen('images/returning')  and ImageCoordinate.is_on_screen('images/unitqueue'):
             print('Troops are returning, let\'s wait them. Timestamp: ' +
                   str(time.time()))
             sleep(0.50)
@@ -520,6 +507,7 @@ class CheckAntibot(AbstractMethods.ProcessHandler):
         super().__init__()
 
     def do_work(self):
+        sleep(3)
         coord = ImageCoordinate.is_on_screen(
             'images/is_antibot_active', accuracy=self.accuracy)
         if coord:
@@ -530,9 +518,11 @@ class CheckAntibot(AbstractMethods.ProcessHandler):
                 print('Verify the bot test please')
                 coord = ImageCoordinate.coords('images/verify_button')
                 clicker.click(coord)
+                sleep(5)
                 usethis = ImageCoordinate.is_on_screen('images/usethis')
                 confirmgee = ImageCoordinate.is_on_screen('images/confirmgee')
-
+                print(usethis)
+                print(confirmgee)
                 solvegee(usethis, confirmgee)
             else:
                 print('Verification is not required. Continue...')
@@ -546,7 +536,7 @@ class ClickToHospital(AbstractMethods.ProcessHandler):
     def do_work(self):
         clicker.move(368 * 2+150, -127 * 2-100)
         clicker.click(clicker.mouse_pos())
-        clicker.repeat_click(3)
+        clicker.repeat_click(1)
         print('Clicked on hospital')
         self.next()
 

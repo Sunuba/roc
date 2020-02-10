@@ -7,7 +7,6 @@ class AttackBarbarians:
         self.troopcount = troopcount
 
     def start(self):
-        is_verify_on = IsVerifyOn()
         check_antibot = CheckAntibot()
         go_outside = GoOutside()
 
@@ -53,7 +52,6 @@ class AttackBarbarians:
             march_to_enemy.append(ClickMarchButton())
 
         # Chain starts here.
-        is_verify_on.set_successor(check_antibot)
         check_antibot.set_successor(go_outside)
         go_outside.set_successor(search_target[0])
 
@@ -85,12 +83,11 @@ class AttackBarbarians:
         click_hospital.set_successor(click_red_cross)
         click_red_cross.set_successor(click_heal_button)
         click_heal_button.set_successor(ask_help)
-        ask_help.set_successor(help_others)
-        help_others.set_successor(openmail)
+        ask_help.set_successor(openmail)
         openmail.set_successor(opensystemmail)
         opensystemmail.set_successor(receivemail)
         receivemail.set_successor(click_confirm)
         click_confirm.set_successor(closemail)
         closemail.set_successor(get_out)
 
-        is_verify_on.do_work()
+        check_antibot.do_work()

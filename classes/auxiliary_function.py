@@ -32,7 +32,7 @@ def find_bounding_box(pane, bounding_box_lower_thresholds, bounding_box_upper_th
     width_lower_threshold, height_lower_threshold = bounding_box_lower_thresholds
     width_upper_threshold, height_upper_threshold = bounding_box_upper_thresholds
     
-    _, contours, hierarchy = cv2.findContours(pane, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(pane, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
     
     for contour in contours:

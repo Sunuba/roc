@@ -3,7 +3,8 @@ import time
 import numpy as np
 from PIL import Image
 import urllib.request
-
+import math
+import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from random import randint
@@ -11,16 +12,25 @@ from random import randint
 from scipy import ndimage, misc
 from scipy.spatial.distance import hamming
 
-from selenium import webdriver
+#from selenium import webdriver
 
 from classes.auxiliary_function import draw_bounding_box, find_bounding_box, segment_pictures
 def solvegee(usethis,confirmgee):
     template = cv2.imread('playing.png')
-    dst = template[usthis[0]:usethis[1],confirmgee[0],confirmgee[1]]
-    img_grey = cv2.imread(dst,0)
-    Image.fromarray(img_grey)   
+    print(template.shape)
+    src = template.copy() 
+    print(math.ceil(usethis[2][1]),math.ceil(confirmgee[2][1]),(math.ceil(usethis[2][0])),math.ceil(confirmgee[3][0]))
+    dst = src[math.ceil(usethis[2][1]):math.ceil(confirmgee[2][1]),(math.ceil(usethis[2][0])):math.ceil(confirmgee[3][0])]
+    img_grey = cv2.cvtColor(dst,  cv2.COLOR_BGR2GRAY)
+
+    print('shape:', dst.shape)
+    print('size:', dst.size)
+    print('--- arr ---\n', dst, '\n--- end ---')
+    cv2.imwrite('imagee.png', dst)
     # crop image
-    main_pane = img_grey[40:,:]
+    main_pane = img_grey[50:,:]
+    cv2.imwrite('main_pane.png', main_pane)
+    cv2.imwrite('target.png', img_grey[:60,:])
 
     # Image preprocessing
 
@@ -29,15 +39,21 @@ def solvegee(usethis,confirmgee):
     main_pane[main_pane<color_threshold] = 0
     main_pane[main_pane>=color_threshold] = 255
     Image.fromarray(main_pane)
+    print('start  bounding')
     icons_rect_coordinates = find_bounding_box(main_pane, (20,20), (100,100),sort=False)
+    print('finish bounding')
     icons = segment_pictures(main_pane,icons_rect_coordinates,(30,30))
     draw_bounding_box(main_pane, icons_rect_coordinates)
     target_color_threshold = 40
-    target_pane = 255 - img_grey[:40,:]
+    print('start target')
+    target_pane = 255 - img_grey[:50,:]
+    cv2.imwrite('target.png', img_grey[:60,:])
     target_pane[target_pane<target_color_threshold] = 0
     target_pane[target_pane>=target_color_threshold] = 255
 
     Image.fromarray(target_pane)
+    print('start finding target bounding')
+
     targets_rect_coordinates = find_bounding_box(target_pane, (5,5), (100,100)) 
     targets = segment_pictures(target_pane,targets_rect_coordinates,(30,30))
     draw_bounding_box(target_pane, targets_rect_coordinates)
@@ -143,12 +159,12 @@ def solvegee(usethis,confirmgee):
         centre_x = x+(w//2)
         centre_y = y+(h//2)
         
-        ele=driver.find_element_by_xpath(u"(.//*[normalize-space(text()) and normalize-space(.)='加载中...'])[1]/following::div[1]")
-        action = webdriver.common.action_chains.ActionChains(driver)
-        action.move_to_element_with_offset(ele, centre_x, centre_y)
-        time.sleep(randint(100,700)/1000) # Random Pause between two consecutive clicks
-        action.click()
-        action.perform()
+        #ele=driver.find_element_by_xpath(u"(.//*[normalize-space(text()) and normalize-space(.)='加载中...'])[1]/following::div[1]")
+    #    action = webdriver.common.action_chains.ActionChains(driver)
+    #    action.move_to_element_with_offset(ele, centre_x, centre_y)
+    #    time.sleep(randint(100,700)/1000) # Random Pause between two consecutive clicks
+    #    action.click()
+    #    action.perform()
 
     # # Click Ok button in CAPTCHA after some random pause
     time.sleep(randint(100,700)/1000)

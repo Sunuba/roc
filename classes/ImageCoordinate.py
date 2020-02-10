@@ -34,7 +34,8 @@ class ImageCoordinate:
         # print(mn_loc)
         # top_left = mn_loc
         # mx_right = mx_loc
-        # bt_rt =(top_left[0]+h,top_left[1]+w)
+        bt_rt =(mn_loc[0],mn_loc[1])
+        bt_rtw = (mn_loc[0]+h,mn_loc[1]+w)
         # cv2.rectangle(large_image,top_left,bt_rt,255,2)
 
         # bt_rt =(mx_right[0]+h,mx_right[1]+w)
@@ -48,7 +49,7 @@ class ImageCoordinate:
         else:
             mn, _, mn_loc, _ = cv2.minMaxLoc(result)
             mp_x, mp_y = mn_loc
-            location = [mp_x + w / 2, mp_y + h / 2, min_val]
+            location = [mp_x + w / 2, mp_y + h / 2, bt_rt,bt_rtw,min_val]
             return location
 
     @staticmethod
