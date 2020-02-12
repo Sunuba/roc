@@ -1,9 +1,10 @@
 from classes.Commands import *
 import random
 
+
 class AttackBarbarians:
-    def __init__(self, startlevel,endlevel, troopcount):
-        self.level = random.randrange(int(startlevel)-24,int(endlevel)-23)
+    def __init__(self, startlevel, endlevel, troopcount):
+        self.level = random.randrange(int(startlevel)-24, int(endlevel)-23)
         self.troopcount = troopcount
 
     def start(self):
@@ -45,8 +46,7 @@ class AttackBarbarians:
             search_target.append(ClickSearchTargetButton(force=num))
             select_target.append(ClickBarbarianButton())
             search_button.append(ClickSearchButton())
-            attack_button.append(SimpleClick('attack_button')
-                                 )
+            attack_button.append(SimpleClick('attack_button'))
             is_march_button_visible.append(IsMarchButtonVisible())
             new_troops.append(ClickNewTroopButton())
             march_to_enemy.append(ClickMarchButton())

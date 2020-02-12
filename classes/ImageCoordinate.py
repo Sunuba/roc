@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 import pyautogui
+import random
 
 
 class ImageCoordinate:
@@ -19,13 +20,14 @@ class ImageCoordinate:
         return loc
 
     @staticmethod
-    def is_on_screen(this,accuracy = 0.15):
+    def is_on_screen(this, accuracy=0.15):
         this = this + '.png'
         Screenshot.shot()
         small_image = cv2.imread(this)
         h, w, c = small_image.shape
         large_image = cv2.imread('playing.png')
-        result = cv2.matchTemplate(small_image, large_image, cv2.TM_SQDIFF_NORMED)
+        result = cv2.matchTemplate(
+            small_image, large_image, cv2.TM_SQDIFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
         #print('ImageCoordinate::is_on_screen => ' + this + ' ' + str(min_val))
         mn, _, mn_loc, mx_loc = cv2.minMaxLoc(result)
@@ -34,14 +36,14 @@ class ImageCoordinate:
         # print(mn_loc)
         # top_left = mn_loc
         # mx_right = mx_loc
-        bt_rt =(mn_loc[0],mn_loc[1])
-        bt_rtw = (mn_loc[0]+h,mn_loc[1]+w)
+        bt_rt = (mn_loc[0], mn_loc[1])
+        bt_rtw = (mn_loc[0]+h, mn_loc[1]+w)
         # cv2.rectangle(large_image,top_left,bt_rt,255,2)
 
         # bt_rt =(mx_right[0]+h,mx_right[1]+w)
         # cv2.rectangle(large_image,mx_right,bt_rt,255,2)
         # cv2.imwrite('result_'+this.replace('images/',''), large_image)
-        #print('saved')
+        # print('saved')
         #pyautogui.moveTo(mp_x, mp_y)
         print(min_val)
         if min_val > accuracy:
@@ -49,7 +51,10 @@ class ImageCoordinate:
         else:
             mn, _, mn_loc, _ = cv2.minMaxLoc(result)
             mp_x, mp_y = mn_loc
-            location = [mp_x + w / 2, mp_y + h / 2, bt_rt,bt_rtw,min_val]
+            ordinal = random.randrange(1, 5)
+            a = random.randrange(-ordinal, ordinal)
+            b = random.randrange(-ordinal, ordinal)
+            location = [mp_x + w / 2+a, mp_y + h / 2+b, bt_rt, bt_rtw, min_val]
             return location
 
     @staticmethod
@@ -62,7 +67,8 @@ class ImageCoordinate:
         small_image = cv2.imread(this)
         h, w, c = small_image.shape
         large_image = cv2.imread('playing.png')
-        result = cv2.matchTemplate(small_image, large_image, cv2.TM_SQDIFF_NORMED)
+        result = cv2.matchTemplate(
+            small_image, large_image, cv2.TM_SQDIFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
         # print('ImageCoordinate::coords => ' + this + ' ' + str(min_val))
         mn, _, mn_loc, mx_loc = cv2.minMaxLoc(result)
@@ -76,10 +82,14 @@ class ImageCoordinate:
         # bt_rt =(mx_right[0]+h,mx_right[1]+w)
         # cv2.rectangle(large_image,mx_right,bt_rt,255,2)
         # cv2.imwrite('result_'+this.replace('images/',''), large_image)
-        #print('saved'+str(min_val))
+        # print('saved'+str(min_val))
         if min_val > 0.2:
             return [0, 0, min_val]
         mn, _, mn_loc, _ = cv2.minMaxLoc(result)
         mp_x, mp_y = mn_loc
-        location = [mp_x + w / 2, mp_y + h / 2, min_val]
+        ordinal = random.randrange(1, 10)
+        a = random.randrange(-ordinal, ordinal)
+        b = random.randrange(-ordinal, ordinal)
+
+        location = [mp_x + w / 2+a, mp_y + h / 2+b, min_val]
         return location

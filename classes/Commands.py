@@ -9,7 +9,7 @@ from time import sleep
 import datetime
 import time
 from classes.breakgeetest import *
-
+import random
 class ResetWhile():
     def __init__(self, seconds):
         self.seconds = seconds
@@ -49,7 +49,7 @@ class ZoomOut(AbstractMethods.ProcessHandler):
 class SimpleClick(AbstractMethods.ProcessHandler):
     '''
     confirm,close_window,
-    gathering_report,war_report,explore_mail,receive
+    gathering_report,war_report,explore_mail,receive,mail_write_close
 
     claim_gift,nida_image,apci,
     investigate_button, send_scout_button, explore_button, durbin_butonu
@@ -273,6 +273,12 @@ class GoOutside(AbstractMethods.ProcessHandler):
                 print('im at home')
                 clicker.move_click(coord)
                 print('Now, you are at outside')
+        
+        num = random.random()*3
+        for count in range(int(num)):
+            coord = [random.randint(200,800),random.randint(200,800)]
+
+            clicker.drag(coord)
         print('outing done')
         self.next()
 
