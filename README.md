@@ -1,3 +1,23 @@
+**How to start exe file?**
+
+executable program is in /dist folder simply click Graphical.exe
+then you can see barb_allday. this one catches barbarian all day. 
+
+**TODO**
+
+1. need to update 
+[BreakGeetest](classes/breakgeetest.py)
+
+Geetest has been updated and need to break this one. 
+
+    1. crop modification
+        -on progress, but still need to capture exact position
+        
+    2. template matching
+        -it's hard only using grayscale template matching, cause geetest block contour matching by modifying colour
+
+
+
 **How to attack barbarians?**
 
     from AttackBarbarians import AttackBarbarians
