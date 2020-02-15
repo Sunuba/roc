@@ -44,7 +44,7 @@ I tried to automate some of the actions in Rise of Civilization.
     your choice of emulator.
     
     2. Your City Hall layout should be in this way:
-![alt text](https://github.com/Sunuba/roc/blob/master/images/layout.png "City Hall Layout")
+![alt text](https://github.com/smallfish06/roc/blob/master/images/KakaoTalk_20200215_153042355.jpg "City Hall Layout")
     
     3. Actually, Alliance Center, Scout Camp and Hospital locations are important in the layout.
      The rest you can put wherever you want.
