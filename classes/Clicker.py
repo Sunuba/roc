@@ -21,7 +21,8 @@ class Clicker:
 
     @staticmethod
     def click(coords, clicks=1, interval=1, button='left', yat=1):
-        base = 0.6+random.random()*random.random()*0.9
+
+        base = 0.3+random.random()*random.random()*0.9
         print(base)
         sleep(base)
         # print('Clicking on: (' + str(coords[0]) + ', ' + str(coords[1]) + ')')
@@ -29,7 +30,7 @@ class Clicker:
 
     @staticmethod
     def move_click(coords, seconds=0.35, yat=1, clicks=1, interval=1, button='left'):
-        base = 0.5+random.random()*random.random()*0.9
+        base = 0.3+random.random()*random.random()*0.9
         print(base)
         sleep(base)
         pyautogui.moveTo(coords[0], coords[1], seconds)

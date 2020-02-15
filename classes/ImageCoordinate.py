@@ -51,7 +51,7 @@ class ImageCoordinate:
         else:
             mn, _, mn_loc, _ = cv2.minMaxLoc(result)
             mp_x, mp_y = mn_loc
-            ordinal = random.randrange(1, 5)
+            ordinal = random.randrange(1, 15)
             a = random.randrange(-ordinal, ordinal)
             b = random.randrange(-ordinal, ordinal)
             location = [mp_x + w / 2+a, mp_y + h / 2+b, bt_rt, bt_rtw, min_val]
@@ -87,7 +87,7 @@ class ImageCoordinate:
             return [0, 0, min_val]
         mn, _, mn_loc, _ = cv2.minMaxLoc(result)
         mp_x, mp_y = mn_loc
-        ordinal = random.randrange(1, 10)
+        ordinal = random.randrange(1, 15)
         a = random.randrange(-ordinal, ordinal)
         b = random.randrange(-ordinal, ordinal)
 

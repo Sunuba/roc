@@ -71,6 +71,19 @@ class SimpleClick(AbstractMethods.ProcessHandler):
             clicker.click(coord)
         self.next()
 
+class IsSomething(AbstractMethods.ProcessHandler):
+    def __init__(self, option):
+        super().__init__()
+        self.path = option
+    def do_work(self):
+        sleep(0.5)
+        coord = ImageCoordinate.is_on_screen('images/'+self.path)
+        if coord:
+            return True
+        else:
+            return False
+
+
 class GatherCityrss(AbstractMethods.ProcessHandler):
     def do_work(self):
         SimpleClick('btnFood').do_work()
@@ -508,7 +521,7 @@ def CheckActionPoint():
 class CheckAntibot(AbstractMethods.ProcessHandler):
     accuracy = 0
 
-    def __init__(self, accuracy=0.1):
+    def __init__(self, accuracy=0.09):
         self.accuracy = accuracy
         super().__init__()
 
