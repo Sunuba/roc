@@ -1,5 +1,4 @@
 /build
 /classes
-\classes
-.vscode/
-__pycache__/
+/.vscode
+/__pycache__
