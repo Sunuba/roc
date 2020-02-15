@@ -2,3 +2,4 @@
 /classes
 \classes
 .vscode/
+__pycache__/
