@@ -1,5 +1,6 @@
 import pyautogui
 from time import sleep
+import random
 
 
 class Clicker:
@@ -20,12 +21,18 @@ class Clicker:
 
     @staticmethod
     def click(coords, clicks=1, interval=1, button='left', yat=1):
-        sleep(yat)
+
+        base = 0.3+random.random()*random.random()*0.9
+        print(base)
+        sleep(base)
         # print('Clicking on: (' + str(coords[0]) + ', ' + str(coords[1]) + ')')
         pyautogui.click(coords[0], coords[1], clicks, interval, button)
 
     @staticmethod
     def move_click(coords, seconds=0.35, yat=1, clicks=1, interval=1, button='left'):
+        base = 0.3+random.random()*random.random()*0.9
+        print(base)
+        sleep(base)
         pyautogui.moveTo(coords[0], coords[1], seconds)
         sleep(yat)
         # print('moving to: (' + str(coords[0]) + ', ' + str(coords[1]) + ') and clicking')
@@ -41,3 +48,12 @@ class Clicker:
         m_p = [x, y]
         return m_p
 
+    @staticmethod
+    def drag(coords):
+        coord = [random.randint(200,800),random.randint(200,800)]
+        pyautogui.mouseDown()
+
+        Clicker.move(coord[0],coord[1])
+        base = 0.5+random.random()*random.random()*20
+        sleep(base)
+        pyautogui.mouseUp(x=coords[0], y=coords[1])

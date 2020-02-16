@@ -1,5 +1,4 @@
-from classes.Commands import GoHome, ClickDurbin, SearchExploreButton, ClickExploreButton, ClickExploreButton2
-from classes.Commands import CheckAntibot, CheckActionPoint, MoveToScoutCampAndClick, SendScoutButton, IsVerifyOn
+from classes.Commands import *
 
 
 class ExploreFog:

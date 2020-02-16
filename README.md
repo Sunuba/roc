@@ -1,3 +1,22 @@
+**How to start exe file?**
+
+executable program is in /dist folder simply click Graphical.exe
+then you can see barb_allday. this one catches barbarian all day. 
+
+**TODO**
+
+1. need to update 
+[BreakGeetest](classes/breakgeetest.py)
+
+Geetest has been updated and need to break this one. 
+
+    1. crop modification
+        -on progress, but still need to capture exact position
+        
+    2. template matching
+        -it's hard only using grayscale template matching, cause geetest block contour matching by modifying colour
+
+
 I tried to automate some of the actions in Rise of Civilization.
 
     Features:
@@ -25,7 +44,7 @@ I tried to automate some of the actions in Rise of Civilization.
     your choice of emulator.
     
     2. Your City Hall layout should be in this way:
-![alt text](https://github.com/Sunuba/roc/blob/master/images/layout.png "City Hall Layout")
+![alt text](https://github.com/smallfish06/roc/blob/master/images/KakaoTalk_20200215_153042355.jpg "City Hall Layout")
     
     3. Actually, Alliance Center, Scout Camp and Hospital locations are important in the layout.
      The rest you can put wherever you want.
