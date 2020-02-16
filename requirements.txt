@@ -125,7 +125,7 @@ testpath==0.4.2
 tfidfDE==0.7.1
 traitlets==4.3.2
 update==0.0.1
-urllib3==1.24.1
+urllib3==1.24.2
 webencodings==0.5.1
 wrapt==1.10.11
 xlrd==1.2.0
