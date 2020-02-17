@@ -2,14 +2,15 @@ from classes.Commands import *
 import random
 from pyautogui import FailSafeException
 
-
 class AttackBarbarians:
     def __init__(self, startlevel, endlevel, troopcount):
         self.level = random.randrange(int(startlevel)-24, int(endlevel)-23)
         self.troopcount = troopcount
-
+        
     def start(self):
         try:
+            pyautogui.FAILSAFE = True
+
             check_antibot = CheckAntibot()
             go_outside = GoOutside()
 
@@ -97,14 +98,18 @@ class AttackBarbarians:
 
             check_antibot.do_work()
         except FailSafeException:
-            if IsSomething('nut').do_work():
-                SimpleClick('close_chat')
             result = False
             while not result:
                 try:
+                    pyautogui.FAILSAFE = False
+                    clicker.move(368 * 2+150, -127 * 2-100)
+                    SimpleClick('confirm').do_work()
+                    if IsSomething('nut').do_work():
+                        SimpleClick('close_chat')
                     SimpleClick('mail_write_close').do_work()
                     print('mail write close')
                     SimpleClick('close_window').do_work()
                     result = True
+                    
                 except FailSafeException:
                     pass
