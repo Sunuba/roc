@@ -10,6 +10,7 @@ import datetime
 import time
 from classes.breakgeetest import *
 import random
+from pyautogui import FailSafeException
 class ResetWhile():
     def __init__(self, seconds):
         self.seconds = seconds
@@ -51,7 +52,7 @@ class SimpleClick(AbstractMethods.ProcessHandler):
     confirm,close_window,
     gathering_report,war_report,explore_mail,receive,mail_write_close
 
-    claim_gift,nida_image,apci,
+    claim_gift,nida_image,apci,ask_help_button
     investigate_button, send_scout_button, explore_button, durbin_butonu
 
     attack_button,isOutside,teleskop_button,
@@ -96,7 +97,7 @@ class DoYouSeeHome(AbstractMethods.ProcessHandler):
         start_time = time.time()
         while ImageCoordinate.is_on_screen('images/present_house'):
             coord = ImageCoordinate.coords('images/present_house')
-            clicker.move_click(coord)
+            clicker.click(coord)
             print('Moved mouse to present home.')
         else:
             print('I do not see any present home.')
@@ -175,7 +176,7 @@ class OpensystemMail(AbstractMethods.ProcessHandler):
         coord = ImageCoordinate.coords('images/systemmail')
         
         if coord:
-            clicker.move_click(coord)
+            clicker.click(coord)
         else:
             coord = ImageCoordinate.coords('images/systemmailblue')
             print('clicking system blue')
@@ -184,7 +185,7 @@ class OpensystemMail(AbstractMethods.ProcessHandler):
             else:
                 coord = ImageCoordinate.coords('images/systemmail')
                 if coord:
-                    clicker.move_click(coord)
+                    clicker.click(coord)
 
         self.next()
 
@@ -199,7 +200,7 @@ class OpenMail(AbstractMethods.ProcessHandler):
             coord = ImageCoordinate.coords('images/mail_button')
             print('will click mail')
             if coord:
-                clicker.move_click(coord)
+                clicker.click(coord)
                 print('clicked mail')
         print('process done')
         self.next()
@@ -211,7 +212,7 @@ class ClickReport(AbstractMethods.ProcessHandler):
             pass
         else:
             coord = ImageCoordinate.coords('images/report_button')
-            clicker.move_click(coord)
+            clicker.click(coord)
         self.next()
 
 
@@ -220,18 +221,11 @@ class ClickPresentIcon(AbstractMethods.ProcessHandler):
         sleep(1)
         coord = ImageCoordinate.is_on_screen('images/present_icon')
         if coord:
-            clicker.move_click(coord)
+            clicker.click(coord)
             sleep(1)
             clicker.click(coord)
         self.next()
 
-
-class MoveToScoutCampAndClick(AbstractMethods.ProcessHandler):
-    def do_work(self):
-        print('Moving over scout camp and clicking on it to open scout menu')
-        clicker.move(368*2-140, -127*2-140)
-        clicker.click(clicker.mouse_pos())
-        self.next()
 
 
 class IsExploreButtonExists(AbstractMethods.ProcessHandler):
@@ -263,7 +257,7 @@ class GoHome(AbstractMethods.ProcessHandler):
     def do_work(self):
         coord = ImageCoordinate.coords('images/isOutside')
         if coord:
-            clicker.move_click(coord)
+            clicker.click(coord)
             print('Going to home. Now, you are at home.')
         else:
             print(' you are at home.')
@@ -277,21 +271,20 @@ class GoOutside(AbstractMethods.ProcessHandler):
             homecoord = ImageCoordinate.is_on_screen('images/isHome')
             if homecoord:
                 print('You are at home')
-                clicker.move_click(homecoord)
+                clicker.click(homecoord)
             else:
                 print('you are outside')
         else:
             coord = ImageCoordinate.coords('images/isHome')
             if coord:
                 print('im at home')
-                clicker.move_click(coord)
+                clicker.click(coord)
                 print('Now, you are at outside')
         
         num = random.random()*3
         for count in range(int(num)):
-            coord = [random.randint(200,800),random.randint(200,800)]
 
-            clicker.drag(coord)
+            clicker.randomdrag()
         print('outing done')
         self.next()
 
@@ -310,14 +303,14 @@ class ClickSearchTargetButton(AbstractMethods.ProcessHandler):
                 else:
                     print('this is hammer')
                     GoOutside().do_work()
-                clicker.move_click(coords)
+                clicker.click(coords)
                 ClickSearchTargetButton.coord = coords
                 print('Now, you are at clicked')
             else:
-                sys.exit('btnSearch is not visible.')
+                raise FailSafeException
         else:
-            clicker.move_click(ClickSearchTargetButton.coord)
-
+            clicker.click(ClickSearchTargetButton.coord)
+        print('found button')
         self.next()
 
 
@@ -329,7 +322,7 @@ class ClickBarbarianButton(AbstractMethods.ProcessHandler):
             ClickBarbarianButton.coord = ImageCoordinate.is_on_screen(
                 'images/btnBarb')
         if ClickBarbarianButton.coord:
-            clicker.move_click(ClickBarbarianButton.coord)
+            clicker.click(ClickBarbarianButton.coord)
         else:
             pass
         self.next()
@@ -343,7 +336,7 @@ class ClickResetLevelButton(AbstractMethods.ProcessHandler):
             ClickResetLevelButton.coord = ImageCoordinate.is_on_screen(
                 'images/search_minus_button')
         if ClickResetLevelButton.coord:
-            clicker.move_click(ClickResetLevelButton.coord,
+            clicker.click(ClickResetLevelButton.coord,
                                clicks=25, interval=0.15)
         else:
             pass
@@ -366,11 +359,11 @@ class ClickSetLevelButton(AbstractMethods.ProcessHandler):
             ClickSetLevelButton.coord = ImageCoordinate.is_on_screen(
                 'images/search_plus_button')
         if ClickSetLevelButton.coord:
-            clicker.move_click(ClickSetLevelButton.coord,
+            clicker.click(ClickSetLevelButton.coord,
                                clicks=self.get_level()-1, interval=0.3)
         else:
             print('fail setlevel')
-            sys.exit('search_plus_button not found. Time: ' + str(time.time()))
+            raise FailSafeException
         self.next()
 
 
@@ -382,29 +375,13 @@ class ClickSearchButton(AbstractMethods.ProcessHandler):
             ClickSearchButton.coord = ImageCoordinate.is_on_screen(
                 'images/search')
         if ClickSearchButton.coord:
-            clicker.move_click(ClickSearchButton.coord)
-            clicker.move(500, -160)
-            clicker.click(clicker.mouse_pos())
+            clicker.click(ClickSearchButton.coord)
+            clicker.centerclick()
         else:
             pass
         self.next()
 
 
-class ClickSearchWoodButton(AbstractMethods.ProcessHandler):
-    def do_work(self):
-        print('Clicking search button to search for the target')
-        coord = ImageCoordinate.coords('images/search')
-        clicker.click(coord)
-        while ImageCoordinate.is_on_screen('images/search'):
-            sleep(1)
-            DecreaseLevel().do_work()
-            sleep(1)
-            coord = ImageCoordinate.coords('images/search', shot=True)
-            clicker.move_click(coord)
-        else:
-            clicker.move(0, -127)
-            clicker.click(clicker.mouse_pos())
-        self.next()
 class ClickGatherButton(AbstractMethods.ProcessHandler):
     coord = False
 
@@ -413,7 +390,7 @@ class ClickGatherButton(AbstractMethods.ProcessHandler):
             ClickGatherButton.coord = ImageCoordinate.is_on_screen(
                 'images/gather_button')
         if ClickGatherButton.coord:
-            clicker.move_click(ClickGatherButton.coord)
+            clicker.click(ClickGatherButton.coord)
         self.next()
 
 
@@ -425,12 +402,12 @@ class ClickNewTroopButton(AbstractMethods.ProcessHandler):
             ClickNewTroopButton.coord = ImageCoordinate.is_on_screen(
                 'images/NewTroops')
         if ClickNewTroopButton.coord:
-            clicker.move_click(ClickNewTroopButton.coord)
+            clicker.click(ClickNewTroopButton.coord)
         else:
             ClickNewTroopButton.coord = ImageCoordinate.is_on_screen(
                 'images/NewTroops')
             if ClickNewTroopButton.coord:
-                clicker.move_click(ClickNewTroopButton.coord)
+                clicker.click(ClickNewTroopButton.coord)
             else:
                 clicker.click(clicker.mouse_pos())
         self.next()
@@ -444,12 +421,12 @@ class ClickNewTroopButtonForGathering(AbstractMethods.ProcessHandler):
             ClickNewTroopButtonForGathering.coord = ImageCoordinate.is_on_screen(
                 'images/NewTroops')
         if ClickNewTroopButtonForGathering.coord:
-            clicker.move_click(ClickNewTroopButtonForGathering.coord)
+            clicker.click(ClickNewTroopButtonForGathering.coord)
         else:
             ClickNewTroopButtonForGathering.coord = ImageCoordinate.is_on_screen(
                 'images/NewTroops')
             if ClickNewTroopButtonForGathering.coord:
-                clicker.move_click(ClickNewTroopButtonForGathering.coord)
+                clicker.click(ClickNewTroopButtonForGathering.coord)
             else:
                 clicker.click(clicker.mouse_pos())
         self.next()
@@ -461,7 +438,7 @@ class IsQueueAvailable(AbstractMethods.ProcessHandler):
         if coord:
             pass
         else:
-            sys.exit('No queue, please wait.')
+            pass
         self.next()
 
 
@@ -472,11 +449,11 @@ class ClickMarch(AbstractMethods.ProcessHandler):
         if not ClickMarch.coord:
             ClickMarch.coord = ImageCoordinate.is_on_screen('images/btnMarch')
         if ClickMarch.coord:
-            clicker.move_click(ClickMarch.coord)
+            clicker.click(ClickMarch.coord)
         else:
             ClickMarch.coord = ImageCoordinate.is_on_screen('images/btnMarch')
             if ClickMarch.coord:
-                clicker.move_click(ClickMarch.coord)
+                clicker.click(ClickMarch.coord)
         sleep(1)
 
         self.next()
@@ -491,17 +468,17 @@ class ClickMarchButton(AbstractMethods.ProcessHandler):
             ClickMarchButton.coord = ImageCoordinate.is_on_screen(
                 'images/btnMarch')
         if ClickMarchButton.coord:
-            clicker.move_click(ClickMarchButton.coord)
+            clicker.click(ClickMarchButton.coord)
         else:
             ClickMarchButton.coord = ImageCoordinate.is_on_screen(
                 'images/btnMarch')
             if ClickMarchButton.coord:
-                clicker.move_click(ClickMarchButton.coord)
+                clicker.click(ClickMarchButton.coord)
                 SimpleClick('close_window').do_work()
                 pass_ap = True
 
         if CheckActionPoint() and not pass_ap:
-             clicker.move_click(ClickMarchButton.coord)
+             clicker.click(ClickMarchButton.coord)
         self.next()
 
 
@@ -509,7 +486,7 @@ def CheckActionPoint():
     #sleep(0.5)
     coord = ImageCoordinate.is_on_screen('images/useap')
     if coord:
-        clicker.move_click(coord, clicks=6, interval=0.15)
+        clicker.click(coord, clicks=6, interval=0.15)
         SimpleClick('close_window').do_work()
 
         return 1
@@ -553,7 +530,7 @@ class CheckAntibot(AbstractMethods.ProcessHandler):
 
 class ClickToHospital(AbstractMethods.ProcessHandler):
     def do_work(self):
-        clicker.move(368 * 2+150, -127 * 2-100)
+        clicker.centerclick()
         clicker.click(clicker.mouse_pos())
         clicker.repeat_click(1)
         print('Clicked on hospital')
@@ -589,23 +566,6 @@ class ClickOnHealButton(AbstractMethods.ProcessHandler):
         self.next()
 
 
-class AskHelp(AbstractMethods.ProcessHandler):
-    coord = False
-
-    def do_work(self):
-        sleep(1)
-        if not AskHelp.coord:
-            AskHelp.coord = ImageCoordinate.is_on_screen(
-                'images/ask_help_button')
-        if AskHelp.coord:
-            clicker.move_to(AskHelp.coord)
-            clicker.repeat_click(5, -20, 40)
-            print('Clicked on help request')
-        else:
-            print('Help is not required')
-        self.next()
-
-
 class HelpOthers(AbstractMethods.ProcessHandler):
     coord = False
 
@@ -614,7 +574,7 @@ class HelpOthers(AbstractMethods.ProcessHandler):
             HelpOthers.coord = ImageCoordinate.is_on_screen(
                 'images/help_others')
         if HelpOthers.coord:
-            clicker.move_to(HelpOthers.coord)
+            clicker.move(HelpOthers.coord[0],HelpOthers.coord[1])
             clicker.repeat_click(5, -20, 40)
             print('Helped alliance members')
         else:

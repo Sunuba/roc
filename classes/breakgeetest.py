@@ -20,13 +20,15 @@ def solvegee(usethis,confirmgee):
     print(template.shape)
     src = template.copy() 
     print(math.ceil(usethis[2][1]),math.ceil(confirmgee[2][1]),(math.ceil(usethis[2][0])),math.ceil(confirmgee[3][0]))
-    dst = src[math.ceil(usethis[2][1]):math.ceil(confirmgee[2][1]),(math.ceil(usethis[2][0])):math.ceil(confirmgee[3][0])]
+    dst = src[math.ceil(confirmgee[2][1]):math.ceil(usethis[2][1]),(math.ceil(usethis[2][0])):math.ceil(confirmgee[3][0])]
+    cv2.imwrite('imageedst.png', dst)
+
     img_grey = cv2.cvtColor(dst,  cv2.COLOR_BGR2GRAY)
 
     print('shape:', dst.shape)
     print('size:', dst.size)
     print('--- arr ---\n', dst, '\n--- end ---')
-    cv2.imwrite('imagee.png', dst)
+    cv2.imwrite('imagee.png', img_grey)
     # crop image
     main_pane = img_grey[50:,:]
     cv2.imwrite('main_pane.png', main_pane)

@@ -10,10 +10,10 @@ from ctypes import windll
 
 
 class Screenshot:
-    
-    @staticmethod
-    def shot(name= 'playing.png',processname = 'BlueStacks'):
-        hwnd = win32gui.FindWindow(None, processname)
+    processname =''
+    @classmethod
+    def shot(cls,name= 'playing.png'):
+        hwnd = win32gui.FindWindow(None, cls.processname)
 
         # Change the line below depending on whether you want the whole window
         # or just the client area. 
@@ -53,25 +53,25 @@ class Screenshot:
             #PrintWindow Succeeded
             im.save("playing.png")
     '''
-    @staticmethod
+    @classmethod
     def shot(name='playing.png'):
         today = datetime.datetime.now()
         # print('Taking screenshot: ' + today.strftime("%H:%M:%S"))
         pyautogui.screenshot(name)
     '''
-    @staticmethod
-    def burst(name='graph'):
+    @classmethod
+    def burst(cls,name='graph'):
         for i in range(0, 100000):
             sleep(1)
             Screenshot.shot(name='screenshots/' + str(name) + str(i) + '.png')
 
-    @staticmethod
-    def sequential_shot(name='seq', i=0):
+    @classmethod
+    def sequential_shot(cls,name='seq', i=0):
         sleep(1)
         Screenshot.shot(name='sequential/color/' + str(name) + str(i) + '.png')
 
-    @staticmethod
-    def region_shot(name='seq', seq_id=0, x1=0, y1=0, x2=200, y2=200, color=False, x_val=0):
+    @classmethod
+    def region_shot(cls,name='seq', seq_id=0, x1=0, y1=0, x2=200, y2=200, color=False, x_val=0):
         sleep(1)
         image = pyautogui.screenshot(region=(x1, y1, x2, y2))
         if not color:
