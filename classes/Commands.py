@@ -73,11 +73,14 @@ class SimpleClick(AbstractMethods.ProcessHandler):
         self.next()
 
 class IsSomething(AbstractMethods.ProcessHandler):
+    path = ''
+
     def __init__(self, option):
         super().__init__()
         self.path = option
     def do_work(self):
         sleep(0.5)
+        print('looking for'+ self.path)
         coord = ImageCoordinate.is_on_screen('images/'+self.path)
         if coord:
             return True
@@ -505,7 +508,7 @@ class CheckAntibot(AbstractMethods.ProcessHandler):
     def do_work(self):
         sleep(3)
         coord = ImageCoordinate.is_on_screen(
-            'images/is_antibot_active', accuracy=self.accuracy)
+            'images/is_antibot_active')
         if coord:
             winsound.Beep(2500, 1500)
             print('Antibot! Antibot! Antibot!')
@@ -514,7 +517,7 @@ class CheckAntibot(AbstractMethods.ProcessHandler):
                 print('Verify the bot test please')
                 coord = ImageCoordinate.coords('images/verify_button')
                 clicker.click(coord)
-                sleep(5)
+                sleep(10)
                 usethis = ImageCoordinate.is_on_screen('images/usethis')
                 confirmgee = ImageCoordinate.is_on_screen('images/confirmgee')
                 print(usethis)

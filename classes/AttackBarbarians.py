@@ -108,14 +108,15 @@ class AttackBarbarians:
                     pyautogui.FAILSAFE = False
                     Clicker.move(50,50)
                     if IsSomething('nut').do_work():
-                        SimpleClick('close_chat')
+                        SimpleClick('close_chat').do_work()
+    
                     SimpleClick('mail_write_close').do_work()
                     SimpleClick('mail_write_close').do_work()
                     print('mail write close')
                     SimpleClick('close_window').do_work()
                     SimpleClick('close_window').do_work()
-                    result = True
                     SimpleClick('confirm').do_work()
+                    result = True
 
                 except FailSafeException:
                     pass

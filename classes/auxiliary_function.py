@@ -11,7 +11,7 @@ def draw_bounding_box(pane, rect_coordinates):
     fig,ax = plt.subplots(1)
 
     # Display the image
-    ax.imshow(pane)
+#    ax.imshow(pane)
 
     # Create a Rectangle patch
     for e in rect_coordinates:
@@ -19,7 +19,7 @@ def draw_bounding_box(pane, rect_coordinates):
         rect = patches.Rectangle((x,y),w,h,linewidth=1,edgecolor='r',facecolor='none')
         ax.add_patch(rect)
 
-    plt.show()
+    #plt.show()
     
 def find_bounding_box(pane, bounding_box_lower_thresholds, bounding_box_upper_thresholds, sort=True):
     # thresholds: turple
