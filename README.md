@@ -2,20 +2,10 @@
 
 executable program is in /dist folder simply click Graphical.exe
 then you can see barb_allday. this one catches barbarian all day.
+It's process based so you should keep emulator on foreground.
 
-BEFORE YOU RUN CODE CHECK [Screenshot](classes/Screenshot.py) AND CHANGE **processname**
+*please change process name(emulator name) after executing program*
 
-```python
-def shot(name= 'playing.png',processname = 'BlueStacks'):
-        hwnd = win32gui.FindWindow(None, processname)
-
-        # Change the line below depending on whether you want the whole window
-        # or just the client area. 
-        left, top, right, bot = win32gui.GetClientRect(hwnd)
-        #left, top, right, bot = win32gui.GetWindowRect(hwnd)
-        w = right - left
-        h = bot - top
-```
 **TODO**
 
 1. need to update 
