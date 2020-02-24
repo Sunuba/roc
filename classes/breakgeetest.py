@@ -161,9 +161,12 @@ def solvegee(usethis,confirmgee):
             print('fuck!')
 
             Commands.SimpleClick('confirmgee').do_work()
+
             time.sleep(6)
         except cv2.error:
             pass
+        if not Commands.IsSomething('confirmgee').do_work():
+            break
 def calculate_max_matching(target,icon,d):
     largest_val = 0
     for degree in range(0,360,d):

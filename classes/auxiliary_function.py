@@ -11,7 +11,7 @@ def draw_bounding_box(pane, rect_coordinates):
     fig,ax = plt.subplots(1)
 
     # Display the image
-#    ax.imshow(pane)
+    ax.imshow(pane)
 
     # Create a Rectangle patch
     for e in rect_coordinates:
