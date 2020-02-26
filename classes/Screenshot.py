@@ -4,28 +4,74 @@ from time import sleep
 import cv2
 import numpy as np
 from PIL import Image
+import win32gui
+import win32ui
+from ctypes import windll
 
 
 class Screenshot:
-    @staticmethod
+    processname =''
+    @classmethod
+    def shot(cls,name= 'playing.png'):
+        hwnd = win32gui.FindWindow(None, cls.processname)
+
+        # Change the line below depending on whether you want the whole window
+        # or just the client area. 
+        left, top, right, bot = win32gui.GetClientRect(hwnd)
+        #left, top, right, bot = win32gui.GetWindowRect(hwnd)
+        w = right - left
+        h = bot - top
+
+        hwndDC = win32gui.GetWindowDC(hwnd)
+        mfcDC  = win32ui.CreateDCFromHandle(hwndDC)
+        saveDC = mfcDC.CreateCompatibleDC()
+
+        saveBitMap = win32ui.CreateBitmap()
+        saveBitMap.CreateCompatibleBitmap(mfcDC, w, h)
+
+        saveDC.SelectObject(saveBitMap)
+
+        # Change the line below depending on whether you want the whole window
+        # or just the client area. 
+        #result = windll.user32.PrintWindow(hwnd, saveDC.GetSafeHdc(), 1)
+        result = windll.user32.PrintWindow(hwnd, saveDC.GetSafeHdc(), 0)
+
+        bmpinfo = saveBitMap.GetInfo()
+        bmpstr = saveBitMap.GetBitmapBits(True)
+
+        im = Image.frombuffer(
+            'RGB',
+            (bmpinfo['bmWidth'], bmpinfo['bmHeight']),
+            bmpstr, 'raw', 'BGRX', 0, 1)
+
+        win32gui.DeleteObject(saveBitMap.GetHandle())
+        saveDC.DeleteDC()
+        mfcDC.DeleteDC()
+        win32gui.ReleaseDC(hwnd, hwndDC)
+
+        if result == 1:
+            #PrintWindow Succeeded
+            im.save("playing.png")
+    '''
+    @classmethod
     def shot(name='playing.png'):
         today = datetime.datetime.now()
         # print('Taking screenshot: ' + today.strftime("%H:%M:%S"))
         pyautogui.screenshot(name)
-
-    @staticmethod
-    def burst(name='graph'):
+    '''
+    @classmethod
+    def burst(cls,name='graph'):
         for i in range(0, 100000):
             sleep(1)
             Screenshot.shot(name='screenshots/' + str(name) + str(i) + '.png')
 
-    @staticmethod
-    def sequential_shot(name='seq', i=0):
+    @classmethod
+    def sequential_shot(cls,name='seq', i=0):
         sleep(1)
         Screenshot.shot(name='sequential/color/' + str(name) + str(i) + '.png')
 
-    @staticmethod
-    def region_shot(name='seq', seq_id=0, x1=0, y1=0, x2=200, y2=200, color=False, x_val=0):
+    @classmethod
+    def region_shot(cls,name='seq', seq_id=0, x1=0, y1=0, x2=200, y2=200, color=False, x_val=0):
         sleep(1)
         image = pyautogui.screenshot(region=(x1, y1, x2, y2))
         if not color:

@@ -1,7 +1,10 @@
 **How to start exe file?**
 
 executable program is in /dist folder simply click Graphical.exe
-then you can see barb_allday. this one catches barbarian all day. 
+then you can see barb_allday. this one catches barbarian all day.
+It's process based so you should keep emulator on foreground.
+
+*please change process name(emulator name) after executing program*
 
 **TODO**
 

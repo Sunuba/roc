@@ -10,22 +10,32 @@ starter.geometry('250x500')
 
 
 class MainInterface:
+    v=StringVar()
+    v.set('BlueStacks')
+    i=IntVar()
+    i.set(26)
+    q=IntVar()
+    q.set(35)
+    x=IntVar()
+    x.set(4)
+    txt_process_name = Entry(starter,text=v)
+    txt_minbarb_level = Entry(starter,text=i)
+    txt_maxbarb_level = Entry(starter,text=q)
+    txt_troop_count = Entry(starter,text=x)
 
-    txt_minbarb_level = Entry(starter)
-    txt_maxbarb_level = Entry(starter)
-
-    txt_troop_count = Entry(starter)
     def __init__(self, barb_level, function):
         self.barb_level = barb_level
         self.function = function
+        
 
     def barb_allday(self):
+        process_name = self.txt_process_name.get()
         minbarb_level = self.txt_minbarb_level.get()
         maxbarb_level = self.txt_maxbarb_level.get()
 
         troop_count = self.txt_troop_count.get()
         while True:
-            attack = AttackBarbarians(minbarb_level,maxbarb_level,troop_count)
+            attack = AttackBarbarians(minbarb_level,maxbarb_level,troop_count,process_name)
             attack.start()
     def test_start(self):
         Tester.start()
@@ -37,6 +47,8 @@ class MainInterface:
         Screenshot.shot('default.png')
 
     def start_interface(self):
+        lbl_process_name = Label(starter, text="Enter process name")
+
         lbl_minbarb_attack = Label(starter, text="Enter barbarian minlevel")
         lbl_maxbarb_attack = Label(starter, text="Enter barbarian maxlevel")
 
@@ -51,6 +63,8 @@ class MainInterface:
         #lbl_barb_allday = Label(starter, text="barb_allday")
         btn_barb_allday = Button(starter, text="barb_allday", command=(lambda: self.barb_allday()))
         
+        lbl_process_name.pack()
+        self.txt_process_name.pack()
         lbl_minbarb_attack.pack()
         self.txt_minbarb_level.pack()
         lbl_maxbarb_attack.pack()

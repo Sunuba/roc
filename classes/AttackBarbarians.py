@@ -1,15 +1,19 @@
 from classes.Commands import *
 import random
 from pyautogui import FailSafeException
-
-
+from classes.Clicker import *
+from classes.Screenshot import*
 class AttackBarbarians:
-    def __init__(self, startlevel, endlevel, troopcount):
+    def __init__(self, startlevel, endlevel, troopcount,process_name):
         self.level = random.randrange(int(startlevel)-24, int(endlevel)-23)
         self.troopcount = troopcount
-
+        self.processname = process_name
+        Clicker.processname = process_name
+        Screenshot.processname = process_name
     def start(self):
         try:
+            pyautogui.FAILSAFE = True
+
             check_antibot = CheckAntibot()
             go_outside = GoOutside()
 
@@ -27,7 +31,7 @@ class AttackBarbarians:
             click_hospital = ClickToHospital()
             click_red_cross = ClickOnHealMenuButton()
             click_heal_button = ClickOnHealButton()
-            ask_help = AskHelp()
+            ask_help = SimpleClick('ask_help_button')
             help_others = HelpOthers()
             get_out = GoOutside()
             click_confirm = SimpleClick('confirm')
@@ -97,14 +101,22 @@ class AttackBarbarians:
 
             check_antibot.do_work()
         except FailSafeException:
-            if IsSomething('nut').do_work():
-                SimpleClick('close_chat')
+            print('fz')
             result = False
             while not result:
                 try:
+                    pyautogui.FAILSAFE = False
+                    Clicker.move(50,50)
+                    if IsSomething('nut').do_work():
+                        SimpleClick('close_chat').do_work()
+    
+                    SimpleClick('mail_write_close').do_work()
                     SimpleClick('mail_write_close').do_work()
                     print('mail write close')
                     SimpleClick('close_window').do_work()
+                    SimpleClick('close_window').do_work()
+                    SimpleClick('confirm').do_work()
                     result = True
+
                 except FailSafeException:
                     pass

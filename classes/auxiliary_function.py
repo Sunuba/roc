@@ -19,7 +19,7 @@ def draw_bounding_box(pane, rect_coordinates):
         rect = patches.Rectangle((x,y),w,h,linewidth=1,edgecolor='r',facecolor='none')
         ax.add_patch(rect)
 
-    plt.show()
+    #plt.show()
     
 def find_bounding_box(pane, bounding_box_lower_thresholds, bounding_box_upper_thresholds, sort=True):
     # thresholds: turple

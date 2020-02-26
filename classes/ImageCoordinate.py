@@ -20,7 +20,7 @@ class ImageCoordinate:
         return loc
 
     @staticmethod
-    def is_on_screen(this, accuracy=0.15):
+    def is_on_screen(this, accuracy=0.14):
         this = this + '.png'
         Screenshot.shot()
         small_image = cv2.imread(this)
@@ -37,7 +37,7 @@ class ImageCoordinate:
         # top_left = mn_loc
         # mx_right = mx_loc
         bt_rt = (mn_loc[0], mn_loc[1])
-        bt_rtw = (mn_loc[0]+h, mn_loc[1]+w)
+        bt_rtw = (mn_loc[0]+w, mn_loc[1]+h)
         # cv2.rectangle(large_image,top_left,bt_rt,255,2)
 
         # bt_rt =(mx_right[0]+h,mx_right[1]+w)
