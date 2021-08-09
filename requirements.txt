@@ -101,7 +101,7 @@ python-dateutil==2.7.3
 pyttsx3==2.81
 PyTweening==1.0.3
 pytz==2018.7
-pywin32==227
+pywin32==301
 pywin32-ctypes==0.2.0
 rake-nltk==1.0.4
 regex==2019.4.14
