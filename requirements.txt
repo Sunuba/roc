@@ -63,7 +63,7 @@ nbconvert==5.5.0
 nbformat==4.4.0
 networkx==2.3
 nltk==3.4.5
-numpy==1.16.1
+numpy==1.22.0
 opencv-python==3.4.4.19
 openpyxl==2.6.2
 packaging==20.1
