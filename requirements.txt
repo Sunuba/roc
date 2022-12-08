@@ -9,7 +9,7 @@ beautifulsoup4==4.7.1
 bleach==3.1.4
 branca==0.3.1
 cachetools==3.0.0
-certifi==2018.10.15
+certifi==2022.12.7
 chardet==3.0.4
 Click==7.0
 cloudpickle==1.1.1
